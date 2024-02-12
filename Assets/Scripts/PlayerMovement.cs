@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 
 public enum ControllType {Keys, WASD}
@@ -14,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody rb;
     private InputAction hor;
     private InputAction ver;
+    private InputAction restart;
 
     private float horMove;
     private float verMove;
@@ -47,6 +49,11 @@ public class PlayerMovement : MonoBehaviour
         ver.started += ctx => verMove = ctx.action.ReadValue<float>();
         ver.canceled += ctx => verMove = 0;
         ver.Enable();
+
+        restart = new InputAction("Restart");
+        restart.AddBinding("<Keyboard>/r");
+        restart.performed += crt => SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        restart.Enable();
     }
 
     // Update is called once per frame
